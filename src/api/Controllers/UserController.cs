@@ -1,6 +1,5 @@
-﻿using System.Threading;
+using System.Threading;
 using System.Threading.Tasks;
-using api.Controllers.Models;
 using api.Services;
 using api.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -10,32 +9,35 @@ namespace api.Controllers
 {
     [Route("api/user")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : BaseController
     {
         private readonly IUserService _userService;
+        private readonly IOrganizationService _orgService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IOrganizationService organizationService)
         {
             _userService = userService;
+            _orgService = organizationService;
         }
 
-        [HttpGet("{userId}")]
-        public async Task<IActionResult> GetUserAsync(long userId, CancellationToken cancellationToken)
+        [HttpGet]
+        public async Task<IActionResult> GetUserAsync(CancellationToken cancellationToken)
         {
-            var user = await _userService.GetUserAsync(userId, cancellationToken);
-            if (user == null)
-                return NotFound();
+            var user = await _userService.GetUserAsync(CurrentUserId, cancellationToken);
             return Ok(user);
         }
 
-        [HttpPut("{userId}")]
-        public async Task<IActionResult> UpdateUserAsync([FromRoute] long userId, [FromBody]User payload, CancellationToken cancellationToken)
+        [HttpGet("orgs")]
+        public async Task<IActionResult> GetUserOrganizationsAsync(CancellationToken cancellationToken)
         {
-            var user = await _userService.GetUserAsync(userId, cancellationToken);
-            if (user == null)
-                return NotFound();
-            await _userService.UpdateUserAsync(payload, cancellationToken);
-            var updatedUser = await _userService.GetUserAsync(userId, cancellationToken);
+            var organizations = await _orgService.GetUserOrganizationsAsync(CurrentUserId, cancellationToken);
+            return Ok(organizations);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateUserAsync([FromBody]UserUpdate patch, CancellationToken cancellationToken)
+        {
+            var updatedUser = await _userService.UpdateUserAsync(CurrentUserId, patch, cancellationToken);
             return Ok(updatedUser);
         }
 
@@ -49,19 +51,19 @@ namespace api.Controllers
             return Ok(new { token });
         }
 
-        [HttpDelete("{userId}")]
-        public async Task<IActionResult> DeleteUserAsync([FromRoute] long userId, CancellationToken cancellationToken)
+        [HttpDelete]
+        public async Task<IActionResult> DeleteUserAsync(CancellationToken cancellationToken)
         {
-            await _userService.DeleteUserAsync(userId, cancellationToken);
-            return Ok();
+            await _userService.DeleteUserAsync(CurrentUserId, cancellationToken);
+            return NoContent();
         }
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> CreateUserAsync([FromBody]UserDetails userDetails, CancellationToken cancellationToken)
+        public async Task<IActionResult> CreateUserAsync([FromBody]UserCreate userCreate, CancellationToken cancellationToken)
         {
-            var user = await _userService.CreateUserAsync(userDetails, cancellationToken);
-            return CreatedAtAction(nameof(GetUserAsync), new { userId = user.Id }, user);
+            var user = await _userService.CreateUserAsync(userCreate, cancellationToken);
+            return CreatedAtAction(nameof(GetUserAsync), user);
         }
     }
 }

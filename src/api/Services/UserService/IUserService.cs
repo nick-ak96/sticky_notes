@@ -1,6 +1,5 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using api.Controllers.Models;
 using api.Models;
 
 namespace api.Services
@@ -9,11 +8,11 @@ namespace api.Services
     {
         Task<string> Login(UserCredentials credentials, CancellationToken cancellationToken);
 
-        Task<User> CreateUserAsync(UserDetails userDetails, CancellationToken cancellationToken);
+        Task<UserResponse> CreateUserAsync(UserCreate userCreate, CancellationToken cancellationToken);
 
-        Task<User> GetUserAsync(long userId, CancellationToken cancellationToken);
+        Task<UserResponse> GetUserAsync(long userId, CancellationToken cancellationToken);
 
-        Task<User> UpdateUserAsync(User user, CancellationToken cancellationToken);
+        Task<UserResponse> UpdateUserAsync(long userId, UserUpdate patch, CancellationToken cancellationToken);
 
         Task DeleteUserAsync(long userId, CancellationToken cancellationToken);
     }

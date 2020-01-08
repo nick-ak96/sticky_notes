@@ -2,11 +2,11 @@ using System.Data;
 
 namespace api.Repositories
 {
-    public class BaseDBProvider
+    public class BaseRepository
     {
         private readonly IDBProvider _dbProvider;
 
-        public BaseDBProvider(IDBProvider dbProvider)
+        public BaseRepository(IDBProvider dbProvider)
         {
             _dbProvider = dbProvider;
         }

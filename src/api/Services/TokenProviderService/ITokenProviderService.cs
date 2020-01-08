@@ -2,8 +2,8 @@ namespace api.Services
 {
     public interface ITokenProviderService
     {
-        bool ValidateToken(string token);
+        long? ValidateToken(string token);
 
-        string IssueToken(string username, bool isPersistent);
+        string IssueToken(long userId, bool isPersistent);
     }
 }

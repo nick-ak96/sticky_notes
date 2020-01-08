@@ -1,14 +1,13 @@
-﻿using System.Threading;
+using System.Threading;
 using System.Threading.Tasks;
 using api.Models;
 using Dapper;
 
 namespace api.Repositories
 {
-    public class UserRepository : BaseDBProvider, IUserRepository
+    public class UserRepository : BaseRepository, IUserRepository
     {
-        public UserRepository(IDBProvider dbProvider)
-            : base(dbProvider)
+        public UserRepository(IDBProvider dbProvider) : base(dbProvider)
         {
         }
 
@@ -24,6 +23,8 @@ namespace api.Repositories
 							password_salt,
 							name,
 							surname,
+							language,
+							profile_picture,
 							insert_date,
 							last_modified)
                     values (
@@ -32,34 +33,58 @@ namespace api.Repositories
 							@PasswordSalt,
 							@Name,
 							@Surname,
+							@Language,
+							@ProfilePicture,
 							@InsertDate,
 							@LastModified);
 					select last_insert_rowid();
                     ";
                 con.Open();
                 return con.QuerySingleAsync<long>(
-                    new CommandDefinition(sql, new
-                    {
-                        user.Username,
-                        user.PasswordHash,
-                        user.PasswordSalt,
-                        user.Name,
-                        user.Surname,
-                        user.InsertDate,
-                        user.LastModified
-                    }, cancellationToken: cancellationToken));
+                    new CommandDefinition(sql,
+                        new
+                        {
+                            user.Username,
+                            user.PasswordHash,
+                            user.PasswordSalt,
+                            user.Name,
+                            user.Surname,
+                            user.Language,
+                            user.ProfilePicture,
+                            user.InsertDate,
+                            user.LastModified
+                        }, cancellationToken: cancellationToken));
             }
         }
 
-        public Task<int> UpdateUserAsync(User user, CancellationToken cancellationToken)
+        public Task<int> UpdateUserAsync(UserResponse user, CancellationToken cancellationToken)
         {
             using (var con = CreateConnection())
             {
-                return Task.FromResult(1);
-                // TODO
-                var sql = string.Empty;
+                var sql = @"
+					update
+						user
+					set
+						name = @Name,
+						surname = @Surname,
+						language = @Language,
+						profile_picture = @ProfilePicture,
+						last_modified = @LastModified
+					where
+						id = @Id
+					";
                 con.Open();
-                return con.ExecuteAsync(new CommandDefinition(sql, new { }, cancellationToken: cancellationToken));
+                return con.ExecuteAsync(
+                    new CommandDefinition(sql,
+                        new
+                        {
+                            user.Name,
+                            user.Surname,
+                            user.Language,
+                            user.ProfilePicture,
+                            user.LastModified,
+                            user.Id
+                        }, cancellationToken: cancellationToken));
             }
         }
 
@@ -67,15 +92,13 @@ namespace api.Repositories
         {
             using (var con = CreateConnection())
             {
-                return Task.FromResult(1);
-                // TODO
-                var sql = string.Empty;
+                var sql = "delete from user where id = @userId";
                 con.Open();
-                return con.ExecuteAsync(new CommandDefinition(sql, new { }, cancellationToken: cancellationToken));
+                return con.ExecuteAsync(new CommandDefinition(sql, new { userId }, cancellationToken: cancellationToken));
             }
         }
 
-        public Task<User> GetUserAsync(long userId, CancellationToken cancellationToken)
+        public Task<UserResponse> GetUserAsync(long userId, CancellationToken cancellationToken)
         {
             using (var con = CreateConnection())
             {
@@ -84,19 +107,19 @@ namespace api.Repositories
                     select
 						id as Id,
                         username as Username,
-                        password_hash as PasswordHash,
-						password_salt as PasswordSalt,
 						name as Name,
 						surname as Surname,
+						language as Language,
+						profile_picture as ProfilePicture,
 						insert_date as InsertDate,
 						last_modified as LastModified
                     from
-                        user
-                    where
-                        id = @userId
+						user
+					where
+						id = @userId
                     ";
                 con.Open();
-                return con.QuerySingleOrDefaultAsync<User>(
+                return con.QuerySingleOrDefaultAsync<UserResponse>(
                     new CommandDefinition(sql, new { userId }, cancellationToken: cancellationToken));
             }
         }
@@ -114,6 +137,8 @@ namespace api.Repositories
 						password_salt as PasswordSalt,
 						name as Name,
 						surname as Surname,
+						language as Language,
+						profile_picture as ProfilePicture,
 						insert_date as InsertDate,
 						last_modified as LastModified
                     from

@@ -8,7 +8,7 @@ create table user (
 	password_salt text not null,
 	name text not null,
 	surname text not null,
-	avatar text,
+	profile_picture text,
 	insert_date datetime not null,
 	last_modified datetime not null
 );
@@ -17,14 +17,14 @@ drop table if exists organization;
 create table organization (
 	id integer primary key,
 	name text not null unique,
-	avatar text,
-	created_by integer references user,
+	profile_picture text,
+	created_by integer references user on delete cascade,
 	insert_date datetime not null,
 	last_modified datetime not null
 );
 
-drop table if exists user_oranization;
-create table user_oranization (
+drop table if exists user_organization;
+create table user_organization (
 	user_id integer references user on delete cascade,
 	organization_id integer references organization on delete cascade,
 	access_type integer not null --defined in Enum AccessType (Creator, ReadWrite, Read)

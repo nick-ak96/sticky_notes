@@ -6,17 +6,21 @@ using Microsoft.Extensions.DependencyInjection;
 using api.Models.Options;
 using api.Repositories;
 using api.Services;
+using Microsoft.Extensions.Logging;
 
 namespace api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IConfiguration _config;
+        private readonly ILogger _logger;
+
+        public Startup(IConfiguration configuration, ILoggerFactory loggerFactory)
         {
-            Configuration = configuration;
+            _config = configuration;
+            _logger = loggerFactory.CreateLogger<Startup>();
         }
 
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -27,19 +31,24 @@ namespace api
                 opt.Filters.Add<api.Filters.AuthorizationFilter>();
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.Configure<AuthenticationKey>(Configuration.GetSection(nameof(AuthenticationKey)));
-            services.Configure<DbContext>(Configuration.GetSection(nameof(DbContext)));
+            services.Configure<AuthenticationKey>(_config.GetSection(nameof(AuthenticationKey)));
+            services.Configure<DbContext>(_config.GetSection(nameof(DbContext)));
 
             // register services
             services.AddScoped<ITokenProviderService, TokenProviderService>();
             services.AddScoped<IPasswordService, PasswordService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IOrganizationService, OrganizationService>();
             services.AddScoped<INoteService, NoteService>();
 
             // register db provider
             services.AddSingleton<IDBProvider, SQLiteProvider>();
             // register repos
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+            services.AddScoped<INoteRepository, NoteRepository>();
+            services.AddScoped<IOrgNoteRepository, OrgNoteRepository>();
+            services.AddScoped<IUserNoteRepository, UserNoteRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

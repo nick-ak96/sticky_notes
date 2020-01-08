@@ -1,4 +1,4 @@
-﻿namespace api.Models.Options
+namespace api.Models.Options
 {
     public class AuthenticationKey
     {

@@ -26,6 +26,7 @@ namespace api.Filters
         {
             if (ex is NotFoundException)
             {
+                _logger.LogWarning(ex, "Exception {Exception} occured", nameof(NotFoundException));
                 return new NotFoundObjectResult(
                     new ProblemDetails()
                     {
@@ -36,6 +37,7 @@ namespace api.Filters
             }
             else if (ex is ConflictException)
             {
+                _logger.LogWarning(ex, "Exception {Exception} occured", nameof(ConflictException));
                 return new ConflictObjectResult(
                     new ProblemDetails()
                     {
@@ -44,8 +46,24 @@ namespace api.Filters
                         Detail = ex.Message
                     });
             }
+            else if (ex is ForbiddenException)
+            {
+                _logger.LogWarning(ex, "Exception {Exception} occured", nameof(ForbiddenException));
+                return new ContentResult()
+                {
+                    StatusCode = 403,
+                    ContentType = "application/json",
+                    Content = JsonConvert.SerializeObject(new ProblemDetails()
+                    {
+                        Title = "Forbidden",
+                        Status = 403,
+                        Detail = ex.Message
+                    })
+                };
+            }
             else
             {
+                _logger.LogCritical(ex, "Unknown exception occured");
                 return new ContentResult()
                 {
                     StatusCode = 500,
@@ -54,11 +72,10 @@ namespace api.Filters
                     {
                         Title = "Unknown error",
                         Status = 500,
-                        Detail = ex.Message + "\n" + ex.StackTrace //"Unknown internal server error"
+                        Detail = "Unknown internal server error"
                     })
                 };
             }
         }
     }
-
 }

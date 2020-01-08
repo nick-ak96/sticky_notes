@@ -3,6 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using api.Models;
 using api.Models.Options;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
@@ -11,13 +12,15 @@ namespace api.Services
     public class TokenProviderService : ITokenProviderService
     {
         private readonly byte[] _privateKey;
+        private readonly ILogger _logger;
 
-        public TokenProviderService(IOptions<AuthenticationKey> options)
+        public TokenProviderService(IOptions<AuthenticationKey> options, ILoggerFactory loggerFactory)
         {
             _privateKey = Encoding.UTF8.GetBytes(options.Value.Key);
+            _logger = loggerFactory.CreateLogger<TokenProviderService>();
         }
 
-        public string IssueToken(string username, bool isPersistent)
+        public string IssueToken(long userId, bool isPersistent)
         {
             var header = JsonConvert.SerializeObject(new
             {
@@ -26,7 +29,7 @@ namespace api.Services
             });
             var payload = JsonConvert.SerializeObject(new AuthenticationTokenPayload
             {
-                usr = username,
+                usr = userId,
                 iss = DateTime.UtcNow,
                 exp = isPersistent ? DateTime.MaxValue : DateTime.UtcNow.AddHours(1)
             });
@@ -39,15 +42,28 @@ namespace api.Services
             return token;
         }
 
-        public bool ValidateToken(string token)
+        public long? ValidateToken(string token)
         {
             var parts = token.Split('.');
             if (parts != null && parts.Length.Equals(3))
             {
                 var computedSignature = SignToken(Encoding.UTF8.GetBytes($"{parts[0]}.{parts[1]}"));
-                return string.Equals(computedSignature, parts[2], StringComparison.Ordinal);
+                if (string.Equals(computedSignature, parts[2], StringComparison.Ordinal))
+                {
+                    // retrieve token payload
+                    var plainPayload = Encoding.UTF8.GetString(Convert.FromBase64String(parts[1]));
+                    var tokenPayload = JsonConvert.DeserializeObject<AuthenticationTokenPayload>(plainPayload);
+                    if (tokenPayload.exp > DateTime.UtcNow)
+                        return tokenPayload.usr;
+                    else
+                        _logger.LogDebug("Token has expired");
+                }
+                else
+                    _logger.LogDebug("Signatures do not match");
             }
-            return false;
+            else
+                _logger.LogDebug("Invalid token format");
+            return null;
         }
 
         private string SignToken(byte[] payload)

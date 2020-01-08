@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="607.655" height="472.368" viewBox="0 0 607.655 472.368">
+  <defs>
+    <filter id="Rectangle_5" x="0" y="0" width="437.809" height="461.993" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Rectangle_5-2" x="122.415" y="53.555" width="379.271" height="418.812" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-2"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur-2"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Rectangle_5-3" x="223.441" y="39.045" width="384.213" height="422.725" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-3"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur-3"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <clipPath id="clip-path">
+      <rect width="50.828" height="89.071" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="Group_21" data-name="Group 21" transform="translate(-934.246 -282.944)">
+    <g id="Group_5" data-name="Group 5" transform="translate(94.452 -92.101) rotate(9)">
+      <g id="Group_2" data-name="Group 2" transform="translate(164.601 -289.738) rotate(16)">
+        <g transform="matrix(0.91, -0.42, 0.42, 0.91, 841.25, 308.88)" filter="url(#Rectangle_5)">
+          <g id="Rectangle_5-4" data-name="Rectangle 5" transform="matrix(0.91, 0.42, -0.42, 0.91, 156.92, 6)" fill="#fff" stroke="#000" stroke-width="1">
+            <rect width="300" height="350" stroke="none"/>
+            <rect x="0.5" y="0.5" width="299" height="349" fill="none"/>
+          </g>
+        </g>
+        <g id="Group_1" data-name="Group 1">
+          <line id="Line_1" data-name="Line 1" x2="190" transform="translate(1040.5 316.5)" fill="none" stroke="#707070" stroke-width="1"/>
+          <line id="Line_2" data-name="Line 2" x2="190" transform="translate(1040.5 346.5)" fill="none" stroke="#707070" stroke-width="1"/>
+          <line id="Line_3" data-name="Line 3" x2="190" transform="translate(1040.5 376.5)" fill="none" stroke="#707070" stroke-width="1"/>
+          <line id="Line_4" data-name="Line 4" x2="190" transform="translate(1040.5 406.5)" fill="none" stroke="#707070" stroke-width="1"/>
+          <line id="Line_5" data-name="Line 5" x2="190" transform="translate(1040.5 436.5)" fill="none" stroke="#707070" stroke-width="1"/>
+        </g>
+      </g>
+      <g id="Group_3" data-name="Group 3" transform="translate(116.455 -15.388) rotate(2)">
+        <g transform="matrix(0.98, -0.19, 0.19, 0.98, 780.08, 227.36)" filter="url(#Rectangle_5-2)">
+          <g id="Rectangle_5-5" data-name="Rectangle 5" transform="matrix(0.98, 0.19, -0.19, 0.98, 198.2, 59.56)" fill="#fff" stroke="#000" stroke-width="1">
+            <rect width="300" height="350" stroke="none"/>
+            <rect x="0.5" y="0.5" width="299" height="349" fill="none"/>
+          </g>
+        </g>
+        <g id="Group_1-2" data-name="Group 1">
+          <line id="Line_1-2" data-name="Line 1" x2="190" transform="translate(1040.5 316.5)" fill="none" stroke="#707070" stroke-width="1"/>
+          <line id="Line_2-2" data-name="Line 2" x2="190" transform="translate(1040.5 346.5)" fill="none" stroke="#707070" stroke-width="1"/>
+          <line id="Line_3-2" data-name="Line 3" x2="190" transform="translate(1040.5 376.5)" fill="none" stroke="#707070" stroke-width="1"/>
+          <line id="Line_4-2" data-name="Line 4" x2="190" transform="translate(1040.5 406.5)" fill="none" stroke="#707070" stroke-width="1"/>
+          <line id="Line_5-2" data-name="Line 5" x2="190" transform="translate(1040.5 436.5)" fill="none" stroke="#707070" stroke-width="1"/>
+        </g>
+      </g>
+      <g id="Group_4" data-name="Group 4" transform="matrix(0.934, -0.358, 0.358, 0.934, 125.122, 430.612)">
+        <g transform="matrix(0.98, 0.21, -0.21, 0.98, 780.97, 94.6)" filter="url(#Rectangle_5-3)">
+          <g id="Rectangle_5-6" data-name="Rectangle 5" transform="translate(232.44 107.42) rotate(-12)" fill="#fff" stroke="#000" stroke-width="1">
+            <rect width="300" height="350" stroke="none"/>
+            <rect x="0.5" y="0.5" width="299" height="349" fill="none"/>
+          </g>
+        </g>
+        <g id="Group_1-3" data-name="Group 1">
+          <line id="Line_1-3" data-name="Line 1" x2="190" transform="translate(1040.5 316.5)" fill="none" stroke="#707070" stroke-width="1"/>
+          <line id="Line_2-3" data-name="Line 2" x2="190" transform="translate(1040.5 346.5)" fill="none" stroke="#707070" stroke-width="1"/>
+          <line id="Line_3-3" data-name="Line 3" x2="190" transform="translate(1040.5 376.5)" fill="none" stroke="#707070" stroke-width="1"/>
+          <line id="Line_4-3" data-name="Line 4" x2="190" transform="translate(1040.5 406.5)" fill="none" stroke="#707070" stroke-width="1"/>
+          <line id="Line_5-3" data-name="Line 5" x2="190" transform="translate(1040.5 436.5)" fill="none" stroke="#707070" stroke-width="1"/>
+        </g>
+      </g>
+    </g>
+    <g id="Component_3_1" data-name="Component 3 – 1" transform="matrix(0.848, 0.53, -0.53, 0.848, 1277.327, 298.765)" clip-path="url(#clip-path)">
+      <g id="Group_6" data-name="Group 6">
+        <path id="Union_3" data-name="Union 3" d="M19.295,41.146H0a9.928,9.928,0,0,1,2-5.841,17.575,17.575,0,0,1,5.447-4.77,30.311,30.311,0,0,1,8.078-3.216q.466-.116.937-.221V8.515A18.853,18.853,0,0,1,13.923,7.25,12.267,12.267,0,0,1,8.016,0H42.328a12.266,12.266,0,0,1-5.907,7.25A18.535,18.535,0,0,1,34.37,8.309V27.1q.471.1.937.221a30.314,30.314,0,0,1,8.078,3.216,17.575,17.575,0,0,1,5.447,4.77,9.928,9.928,0,0,1,2,5.841H31.05L25.172,89.071Z"/>
+        <path id="Subtraction_6" data-name="Subtraction 6" d="M8.012,7.533H0c0-.05,0-.09,0-.127C0,5.838.977,4.311,2.825,2.992A20.6,20.6,0,0,1,10.17,0,12.8,12.8,0,0,0,8.583,3.423a13.969,13.969,0,0,0-.572,3.983c0,.042,0,.084,0,.126h0Z" transform="translate(5.728 30.911)" fill="rgba(255,255,255,0.9)"/>
+      </g>
+    </g>
+  </g>
+</svg>

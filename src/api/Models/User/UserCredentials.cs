@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
-namespace api.Controllers.Models
+namespace api.Models
 {
     public class UserCredentials
     {

@@ -2,7 +2,7 @@ using System;
 
 namespace api.Models.Exceptions
 {
-	[Serializable]
+    [Serializable]
     public class NotFoundException : Exception
     {
         public NotFoundException()

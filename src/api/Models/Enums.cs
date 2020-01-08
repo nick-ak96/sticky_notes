@@ -1,9 +1,14 @@
 namespace api.Models
 {
-    public enum AccessType
+    public enum NoteAccessType
     {
-        Creator = 0,
-        ReadWrite = 1,
-        Read = 2
+        R = 0,
+        RW = 1
+    }
+
+    public enum OrganizationAccessType
+    {
+        R = 0,
+        RW = 1
     }
 }
