@@ -1,21 +1,16 @@
 <template>
-	<div>
-		<div>
-			<h3>Public notes</h3>
-		</div>
-		<div>
+	<div class="notes-group">
+		<div class="notes-search-box">
 			<input v-model="filter" type="text" />
 			<button v-on:click="loadPublicNotes">Search</button>
 		</div>
 		<div>
-			<div>
-				<note
-				v-for="note in notes"
-				v-bind:key="note.id"
-				v-bind:note="note"
-				v-bind:editable="false"
-				></note>
-			</div>
+			<note
+			v-for="note in notes"
+			v-bind:key="note.id"
+			v-bind:note="note"
+			v-bind:editable="false"
+			></note>
 		</div>
 	</div>
 </template>
@@ -60,4 +55,7 @@ export default {
 </script>
 
 <style scoped>
+.public-notes {
+	padding: 1em;
+}
 </style>

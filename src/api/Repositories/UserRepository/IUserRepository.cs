@@ -14,6 +14,8 @@ namespace api.Repositories
 
         Task<int> UpdateUserAsync(UserResponse user, CancellationToken cancellationToken);
 
+        Task<int> UpdateUserAsync(User user, CancellationToken cancellationToken);
+
         Task<int> DeleteUserAsync(long userId, CancellationToken cancellationToken);
     }
 }

@@ -4,7 +4,7 @@
 		<main>
 			<router-view/>
 		</main>
-		<footer>Some footer</footer>
+		<!--footer>Some footer</footer-->
 	</div>
 </template>
 
@@ -14,11 +14,6 @@ import MainHeader from './components/MainHeader.vue'
 export default {
 	components: {
 		MainHeader
-	},
-	mounted () {
-		if (!sessionStorage.token && this.$router.history.pending.path !== '/') {
-			this.$router.replace({ name: 'home' })
-		}
 	}
 }
 </script>
@@ -40,5 +35,13 @@ html, body {
 }
 main {
 	padding-top: var(--header-height);
+}
+
+.notes-group {
+	padding: 1em;
+}
+
+.notes-search-box {
+	margin: 1em 0;
 }
 </style>

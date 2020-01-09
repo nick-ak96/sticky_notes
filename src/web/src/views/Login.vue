@@ -3,6 +3,9 @@
 		<div class="panel">
 			<div class="panel-body">
 				<div class="col">
+					<p v-if="showError">
+						<red>Invalid username or password</red>
+					</p>
 					<div class="input-group">
 						<label for="username">Username*</label>
 						<input id="username" type="text" v-model="username">
@@ -29,11 +32,12 @@ export default {
 	data: function () {
 		return {
 			username: '',
-			password: ''
+			password: '',
+			showError: false
 		}
 	},
 	beforeMount () {
-		if (sessionStorage.getItem('token')) {
+		if (sessionStorage.token) {
 			this.$router.replace({ name: 'home' })
 		}
 	},
@@ -50,9 +54,13 @@ export default {
 					password: this.password
 				}),
 				callback: function (xhr) {
-					let response = JSON.parse(xhr.responseText)
-					sessionStorage.setItem('token', response.token)
-					app.$router.replace({ name: 'home' })
+					if (xhr.status === 200) {
+						let response = JSON.parse(xhr.responseText)
+						sessionStorage.setItem('token', response.token)
+						app.$router.go()
+					} else {
+						app.showError = true
+					}
 				}
 			})
 		}

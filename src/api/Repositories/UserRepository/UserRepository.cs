@@ -57,6 +57,40 @@ namespace api.Repositories
             }
         }
 
+        public Task<int> UpdateUserAsync(User user, CancellationToken cancellationToken)
+        {
+            using (var con = CreateConnection())
+            {
+                var sql = @"
+					update
+						user
+					set
+						name = @Name,
+						surname = @Surname,
+						language = @Language,
+						profile_picture = @ProfilePicture,
+						last_modified = @LastModified,
+						password_hash = @PasswordHash,
+						password_salt = @PasswordSalt
+					where
+						id = @Id
+					";
+                con.Open();
+                return con.ExecuteAsync(
+                    new CommandDefinition(sql,
+                        new
+                        {
+                            user.Name,
+                            user.Surname,
+                            user.Language,
+                            user.ProfilePicture,
+                            user.LastModified,
+							user.PasswordHash,
+							user.PasswordSalt,
+                            user.Id
+                        }, cancellationToken: cancellationToken));
+            }
+        }
         public Task<int> UpdateUserAsync(UserResponse user, CancellationToken cancellationToken)
         {
             using (var con = CreateConnection())

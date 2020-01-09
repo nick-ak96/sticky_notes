@@ -161,6 +161,9 @@ namespace api.Repositories
 						";
 					parameters.filter = $"%{filter}%";
 				}
+				sql += @"
+					order by n.id desc
+					";
                 con.Open();
                 return con.QueryAsync<Note>(new CommandDefinition(sql, (object)parameters, cancellationToken: cancellationToken));
             }
@@ -188,6 +191,7 @@ namespace api.Repositories
 						user_note un on n.id = un.note_id and un.user_id = @userId
 					inner join
 						user u on n.created_by = u.id
+					order by n.id desc
 					";
                 con.Open();
                 return con.QueryAsync<Note>(new CommandDefinition(sql, new { userId }, cancellationToken: cancellationToken));
@@ -207,12 +211,16 @@ namespace api.Repositories
 						n.is_public as IsPublic,
 						n.is_pinned as IsPinned,
 						n.created_by as CreatedBy,
+						u.username as Username,
 						n.last_modified as LastModified,
 						n.insert_date as InsertDate
 					from
 						note n
 					inner join
-						organization_note on n.id = on.note_id and on.organization_id = @organizationId
+						organization_note orgn on n.id = orgn.note_id and orgn.organization_id = @organizationId
+					inner join
+						user u on n.created_by = u.id
+					order by n.id desc
 					";
                 con.Open();
                 return con.QueryAsync<Note>(new CommandDefinition(sql, new { organizationId }, cancellationToken: cancellationToken));

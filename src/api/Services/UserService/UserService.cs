@@ -37,8 +37,19 @@ namespace api.Services
             if (user == null)
                 throw new NotFoundException($"User {userId} was not found");
 
-            user.Update(patch);
-            var result = await _userRepository.UpdateUserAsync(user, cancellationToken);
+            int result;
+            if (!string.IsNullOrWhiteSpace(patch.Password))
+            {
+                var fullUser = await _userRepository.GetUserByUsernameAsync(user.Username, cancellationToken);
+                (fullUser.PasswordHash, fullUser.PasswordSalt) = _passwordService.GetPasswordHash(patch.Password);
+                fullUser.Update(patch);
+                result = await _userRepository.UpdateUserAsync(fullUser, cancellationToken);
+            }
+            else
+            {
+                user.Update(patch);
+                result = await _userRepository.UpdateUserAsync(user, cancellationToken);
+            }
             if (result < 1)
                 throw new Exception($"Error updating user {userId}");
 

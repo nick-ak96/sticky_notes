@@ -21,31 +21,47 @@ const routes = [
 		component: () => import('../views/Register.vue')
 	},
 	{
-		path: '/account',
-		name: 'account',
+		path: '/account/:id/org/:orgId',
+		name: 'organization',
+		component: () => import('../components/Organization.vue'),
+		meta: { conditionalRoute: true },
+		props: (route) => ({ id: Number(route.params.id), orgId: Number(route.params.orgId) })
+	},
+	{
+		path: '/account/:id',
 		component: () => import('../views/Account.vue'),
 		children: [
 			{
-				path: '',
-				name: 'userNotes',
-				component: () => import('../components/UserNotes.vue')
-			},
-			{
 				path: 'shared',
 				name: 'sharedNotes',
-				component: () => import('../components/SharedNotes.vue')
+				component: () => import('../components/SharedNotes.vue'),
+				meta: { conditionalRoute: true },
+				props: (route) => ({ id: Number(route.params.id) })
 			},
 			{
-				path: 'organizations',
+				path: 'org',
 				name: 'userOrganizations',
-				component: () => import('../components/Organizations.vue')
+				component: () => import('../components/Organizations.vue'),
+				meta: { conditionalRoute: true },
+				props: (route) => ({ id: Number(route.params.id) })
 			},
 			{
 				path: 'edit',
 				name: 'editAccount',
-				component: () => import('../components/EditAccount.vue')
+				component: () => import('../components/EditAccount.vue'),
+				meta: { conditionalRoute: true },
+				props: (route) => ({ id: Number(route.params.id) })
+			},
+			{
+				path: '',
+				name: 'userNotes',
+				component: () => import('../components/UserNotes.vue'),
+				meta: { conditionalRoute: true },
+				props: (route) => ({ id: Number(route.params.id) })
 			}
-		]
+		],
+		meta: { conditionalRoute: true },
+		props: (route) => ({ id: Number(route.params.id) })
 	}
 ]
 

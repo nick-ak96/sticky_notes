@@ -103,6 +103,29 @@ namespace api.Repositories
             }
         }
 
+        public Task<IEnumerable<UserResponse>> GetOrganizationMembersAsync(long organizationId, CancellationToken cancellationToken)
+        {
+			using (var con = CreateConnection()) {
+				var sql = @"
+					select
+						u.id as Id,
+                        u.username as Username,
+						u.name as Name,
+						u.surname as Surname,
+						u.language as Language,
+						u.profile_picture as ProfilePicture,
+						u.insert_date as InsertDate,
+						u.last_modified as LastModified
+					from
+						user u
+						inner join
+							user_organization uo on uo.organization_id = @organizationId and uo.user_id = u.id
+					";
+				con.Open();
+                return con.QueryAsync<UserResponse>(new CommandDefinition(sql, new { organizationId }, cancellationToken: cancellationToken));
+			}
+        }
+
         public Task<OrganizationAccessType?> GetUserAccessTypeAsync(long organizationId, long userId, CancellationToken cancellationToken)
         {
 			using (var con = CreateConnection())

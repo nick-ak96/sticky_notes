@@ -1,13 +1,11 @@
 <template>
 	<div>
-		<div>
-			<h3>User notes</h3>
-		</div>
-		<div>
-			<input v-model="filter" type="text" />
-			<button v-on:click="loadUserNotes">Search</button>
-		</div>
-		<div>
+		<div class="notes-group">
+			<div class="notes-search-box">
+				<input v-model="filter" type="text" />
+				<button v-on:click="loadUserNotes">Search</button>
+				<button v-on:click="createUserNote">Create new note</button>
+			</div>
 			<div>
 				<note
 				v-for="(note, index) in notes"
@@ -18,7 +16,6 @@
 				v-on:note-delete="notes.splice(index, 1)"
 				></note>
 			</div>
-			<button v-on:click="createUserNote">Create new note</button>
 		</div>
 	</div>
 </template>
@@ -95,5 +92,11 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+h3 {
+	text-transform: uppercase;
+}
+.user-notes {
+	padding: 1em;
+}
 </style>

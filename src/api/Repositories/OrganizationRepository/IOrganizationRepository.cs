@@ -24,5 +24,7 @@ namespace api.Repositories
         Task<int> RemoveUserFromOrganizationAsync(long organizationId, long userId, CancellationToken cancellationToken);
 
         Task<int> UpdateUserOrganizationAccessAsync(long organizationId, long userId, OrganizationAccessType accessType, CancellationToken cancellationToken);
+
+		Task<IEnumerable<UserResponse>> GetOrganizationMembersAsync(long organizationId, CancellationToken cancellationToken);
     }
 }

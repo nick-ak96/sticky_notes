@@ -9,5 +9,7 @@ namespace api.Models
         public string Surname { get; set; }
 
         public string ProfilePicture { get; set; }
+
+        public string Password { get; set; }
     }
 }

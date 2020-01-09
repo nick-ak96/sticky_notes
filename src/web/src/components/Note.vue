@@ -24,7 +24,7 @@
 			<div class="note-info">
 				<span class="fas fa-user">
 					<span class="tooltip">
-						{{ note.username }}
+						@{{ note.username }}
 					</span>
 				</span>
 				<span class="fas fa-clock">
@@ -35,48 +35,52 @@
 			</div>
 			<div class="note-tools" v-if="editable">
 				<div class="share-menu" v-if="shareMenuOpen">
-					<button v-on:click="shareMenuOpen = false">Close</button>
-					<div class="box">
-						<div class="input-group">
-							<label for="sh-public">Public</label>
-							<input id="sh-public" type="checkbox"
-								v-model="isPublic"
-								v-on:change="sharePublic"
-							>
-						</div>
-						<div>
-							<h4>Users</h4>
-							<div class="sharing-list">
-								<ul>
-									<li
-										v-for="(user, index) in sharingInfo.users"
-										v-bind:key="index"
-										>
-										{{ user.userDetails.name + ' ' + user.userDetails.surname }}
-										<span class="fas fa-times" v-on:click="removeUser(user.userId, index)"></span>
-									</li>
-								</ul>
+					<span class="fas fa-times close-button" v-on:click="shareMenuOpen = false"></span>
+					<div class="box-scroll">
+						<div class="box">
+							<div>
+								<h4>Public</h4>
 								<div class="input-group">
-									<input type="number" v-model="newUserToShare" placeholder="Enter a user ID for sharing">
-									<button v-on:click="addUser">Share</button>
+									<input id="sh-public" type="checkbox"
+										v-model="isPublic"
+										v-on:change="sharePublic"
+									>
 								</div>
 							</div>
-						</div>
-						<div>
-							<h4>Organizations</h4>
-							<div class="sharing-list">
-								<ul>
-									<li
-										v-for="(org, index) in sharingInfo.organizations"
-										v-bind:key="index"
-										>
-										{{ org.organizationDetails.name }}
-										<span class="fas fa-times" v-on:click="removeOrg(org.organizationId, index)"></span>
-									</li>
-								</ul>
-								<div class="input-group">
-									<input type="number" v-model="newOrgToShare" placeholder="Enter an ID of organization for sharing">
-									<button v-on:click="addOrg">Share</button>
+							<div>
+								<h4>Users</h4>
+								<div class="sharing-list">
+									<ul>
+										<li
+											v-for="(user, index) in sharingInfo.users"
+											v-bind:key="index"
+											>
+											{{ user.userDetails.name + ' ' + user.userDetails.surname }}
+											<span class="fas fa-trash" v-on:click="removeUser(user.userId, index)"></span>
+										</li>
+									</ul>
+									<div class="input-group">
+										<input type="number" v-model="newUserToShare" placeholder="Enter a user ID for sharing">
+										<button v-on:click="addUser">Share</button>
+									</div>
+								</div>
+							</div>
+							<div>
+								<h4>Organizations</h4>
+								<div class="sharing-list">
+									<ul>
+										<li
+											v-for="(org, index) in sharingInfo.organizations"
+											v-bind:key="index"
+											>
+											{{ org.organizationDetails.name }}
+											<span class="fas fa-trash" v-on:click="removeOrg(org.organizationId, index)"></span>
+										</li>
+									</ul>
+									<div class="input-group">
+										<input type="number" v-model="newOrgToShare" placeholder="Enter an ID of organization for sharing">
+										<button v-on:click="addOrg">Share</button>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -453,5 +457,45 @@ export default {
 	border-radius: 6px;
 	box-shadow: 1px 0px 3px 1px rgba(0, 0, 0, .2);
 	overflow: auto;
+}
+
+.close-button {
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	cursor: pointer;
+}
+
+.box {
+	height: 100%;
+	width: 70%;
+	overflow: auto;
+	text-align: center;
+	margin: 0 auto;
+	padding: 2em 0;
+}
+
+.input-group {
+	text-align: right;
+}
+
+.box h4 {
+	text-align: left;
+}
+
+.input-group input:not([type="checkbox"]) {
+	width: 60%;
+	margin-left: 5px;
+}
+
+.sharing-list ul, .sharing-list li {
+	list-style: none;
+	text-align: right;
+}
+
+.sharing-list li {
+	margin: .5em 0;
+	padding: 5px 10px;
+	box-shadow: 1px 0px 3px 1px rgba(0, 0, 0, .2);
 }
 </style>

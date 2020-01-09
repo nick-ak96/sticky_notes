@@ -1,13 +1,10 @@
 <template>
 	<div>
-		<div>
-			<h3>Shared notes</h3>
-		</div>
-		<div>
-			<input v-model="filter" type="text" />
-			<button v-on:click="loadSharedNotes">Search</button>
-		</div>
-		<div>
+		<div class="notes-group">
+			<div class="note-search-box">
+				<input v-model="filter" type="text" />
+				<button v-on:click="loadSharedNotes">Search</button>
+			</div>
 			<div>
 				<note
 				v-for="note in userNotes"

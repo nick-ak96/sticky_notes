@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace api.Models
 {
@@ -34,5 +35,7 @@ namespace api.Models
         public DateTime InsertDate { get; set; }
 
         public DateTime LastModified { get; set; }
+
+        public IEnumerable<UserResponse> Members { get; set; }
     }
 }

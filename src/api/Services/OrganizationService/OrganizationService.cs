@@ -53,12 +53,18 @@ namespace api.Services
             var organization = await _organizationRepository.GetOrganizationAsync(organizationId, cancellationToken);
             if (organization == null)
                 throw new NotFoundException($"Organization {organizationId} does not exist");
+			organization.Members = await _organizationRepository.GetOrganizationMembersAsync(organizationId, cancellationToken);
             return organization;
         }
 
-        public Task<IEnumerable<Organization>> GetUserOrganizationsAsync(long requester, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Organization>> GetUserOrganizationsAsync(long requester, CancellationToken cancellationToken)
         {
-            return _organizationRepository.GetUserOrganizationsAsync(requester, cancellationToken);
+            var organizations = await _organizationRepository.GetUserOrganizationsAsync(requester, cancellationToken);
+            foreach (var org in organizations)
+            {
+                org.Members = await _organizationRepository.GetOrganizationMembersAsync(org.Id, cancellationToken);
+            }
+            return organizations;
         }
 
         public async Task<OrganizationAccessType> GetUserAccessTypeAsync(long organizationId, long userId, CancellationToken cancellationToken)

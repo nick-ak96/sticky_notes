@@ -17,6 +17,15 @@ namespace api.Models
             LastModified = DateTime.UtcNow;
         }
 
+        public void Update(UserUpdate patch)
+        {
+            Language = patch.Language ?? Language;
+            Name = patch.Name ?? Name;
+            Surname = patch.Surname ?? Surname;
+            ProfilePicture = patch.ProfilePicture ?? ProfilePicture;
+            LastModified = DateTime.UtcNow;
+        }
+
         public long Id { get; set; }
 
         public string Language { get; set; }

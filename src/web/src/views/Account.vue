@@ -1,21 +1,18 @@
 <template>
 	<div>
-		<div>
-			<button v-on:click="logout">Log out</button>
-		</div>
-		<div>
+		<div class="menu">
 			<ul>
 				<li>
-					<router-link to="/account">My notes</router-link>
+					<router-link :to="{ path: `/account/${id}` }">My notes</router-link>
 				</li>
 				<li>
-					<router-link to="/account/shared">Shared notes</router-link>
+					<router-link :to="{ path: `/account/${id}/shared` }">Shared notes</router-link>
 				</li>
 				<li>
-					<router-link to="/account/organizations">Organizations</router-link>
+					<router-link :to="{ path: `/account/${id}/org` }">Organizations</router-link>
 				</li>
 				<li>
-					<router-link to="/account/edit">Account settings</router-link>
+					<router-link :to="{ path: `/account/${id}/edit` }">Account settings</router-link>
 				</li>
 			</ul>
 		</div>
@@ -27,15 +24,33 @@
 
 <script>
 export default {
-	name: 'account',
-	methods: {
-		logout () {
-			sessionStorage.removeItem('token')
-			this.$router.replace({ name: 'home' })
-		}
-	}
+	props: [
+		'id'
+	]
 }
 </script>
 
-<style>
+<style scoped>
+.menu {
+}
+
+ul, li {
+	list-style: none;
+}
+
+li {
+	display: inline-block;
+	margin: 3em 3em;
+}
+
+li a {
+	text-decoration: none;
+	color: #000;
+	padding: 1em 2em;
+	border-radius: 10px;
+}
+
+li a.router-link-exact-active {
+	box-shadow: 1px 0px 5px 1px rgba(0, 0, 0, .2);
+}
 </style>
